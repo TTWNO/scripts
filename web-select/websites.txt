@@ -1,0 +1,6 @@
+duckduckgo.com
+wikipedia.org
+messenger.facebook.com
+youtube.com
+archwiki.org
+github.com
