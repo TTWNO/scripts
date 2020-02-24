@@ -1,0 +1,20 @@
+#!/bin/sh
+curr_vpn="$(systemctl list-units | tr -d '*' | awk '/openvpn-client/ {print $1}')"
+
+if [ "" = "$curr_vpn" ]; then
+  echo "No running VPN. Will start one."
+else
+  echo "Current VPN: $curr_vpn"
+  echo "systemctl stop $curr_vpn"
+  systemctl stop $curr_vpn
+  echo "Stopped $curr_vpn"
+fi
+
+if [ "" = "$1" ]; then
+  echo "No VPN specified to start. Pass as first argument."
+else
+  echo "Starting openvpn-client@$1"
+  echo "systemctl start openvpn-client@$1"
+  systemctl start "openvpn-client@$1"
+  echo "Started openvpn-client@$1"
+fi

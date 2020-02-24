@@ -1,0 +1,12 @@
+#!/bin/sh
+
+curl_ret=$(curl -s https://ipinfo.io)
+awk_state="/\"$1\"/ {print \$2}"
+#echo "CR: $curl_ret"
+#echo "AS: $awk_state"
+
+if [ "$1" == "" ]; then
+  echo "$curl_ret"
+else
+  echo "$curl_ret"| awk "$awk_state"| tr -d [\",]
+fi
