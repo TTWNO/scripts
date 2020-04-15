@@ -1,0 +1,11 @@
+#!/bin/bash
+
+arrn=$(ls "$1" | wc -l)
+rand=$(($RANDOM % $arrn))
+if [[ $rand -eq 0 ]]; then
+  ((rand += 1))
+fi
+if [[ $rand -eq 1 ]]; then
+  ((rand += 1))
+fi
+ls -l "$1" | sed "${rand}q" | tail -n1 | awk '{print $9}'
