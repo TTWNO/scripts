@@ -1,11 +1,26 @@
 #!/bin/bash
 
-arrn=$(ls "$1" | wc -l)
+# If no directory given, use the current one.
+dir=""
+if [[ "$1" == "" ]]; then
+  dir="."
+else
+  dir="$1"
+fi
+
+# arrn = number of files in directory + 1 (header line)
+arrn=$(ls "$dir" | wc -l)
+# Add one for sed:
+#  sed 11q will print the first 10 lines, but I want the 11th
+# Add one for % modulous:
+#  10 mod 10 == 0, but I need 10 to be a valid random number
+((arrn += 2))
 rand=$(($RANDOM % $arrn))
-if [[ $rand -eq 0 ]]; then
+# Add to rand until it is at least two:
+#  0 will fail, and 1 will print the header line of ls -l
+while [[ "$rand" -lt 2 ]]; do
   ((rand += 1))
-fi
-if [[ $rand -eq 1 ]]; then
-  ((rand += 1))
-fi
-ls -l "$1" | sed "${rand}q" | tail -n1 | awk '{print $9}'
+done
+# List the dir again, get the $rand line, grab the tail of that,
+#  then print the 9th element of the line (the file/dir name).
+ls -l "$dir" | sed "${rand}q" | tail -n1 | awk '{print $9}'
