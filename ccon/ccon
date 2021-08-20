@@ -1,0 +1,5 @@
+#!/bin/bash
+from=$(echo $2 | tr '[a-z]' '[A-Z]')
+to=$(echo $3 | tr '[a-z]' '[A-Z]')
+
+units "$1$from" "$to" | head -n1 | awk '{printf "%.2f\n", $2}'
