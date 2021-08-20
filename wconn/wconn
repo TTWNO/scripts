@@ -1,0 +1,13 @@
+#!/bin/bash
+echo -n "SSID: "
+read -r ssid
+echo -n "Password (if any): "
+read -r password
+echo -n "Name (for future use): "
+read -r name
+
+if [ -n password ]; then
+  nmcli dev wifi con "$ssid" password "$password" name "$name"
+else
+  nmcli dev wifi con "$ssid" name "$name"
+fi
