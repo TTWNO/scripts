@@ -7,4 +7,5 @@
 * gem
 * gem install jekyll
 
-##
+## wconn
+* NetworkManager-cli
